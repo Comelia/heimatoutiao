@@ -4,13 +4,13 @@
       <img src="../../assets/images/logo_index.png" alt="">
       <!-- 表单 -->
       <!-- 表单容器 -->
-      <el-form ref="loginForm" :model="loginForm">
+      <el-form ref="loginForm" :status-icon="true" :model="loginForm" :rules="loginRules">
         <!-- 表单每一项容器 -->
-        <el-form-item>
+        <el-form-item  prop="mobile">
           <!-- 表单元素 -->
           <el-input v-model="loginForm.mobile" placeholder="请输入手机号"></el-input>
         </el-form-item>
-        <el-form-item>
+        <el-form-item prop="code">
           <el-input v-model="loginForm.code" placeholder="请输入验证码" style="width: 240px"></el-input>
           <el-button style="float: right">发送验证码</el-button>
         </el-form-item>
@@ -18,7 +18,7 @@
           <el-checkbox :value="true">我已阅读并同意用户此而已和隐私条款</el-checkbox>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" style="width: 100%">登录</el-button>
+          <el-button type="primary" @click="login()" style="width: 100%">登录</el-button>
         </el-form-item>
       </el-form>
     </el-card>
@@ -28,11 +28,48 @@
 <script>
 export default {
   data () {
+    // 校验手机号
+    const checkMobile = (rule, value, callback) => {
+      // 检验逻辑 把vaule拿出来进行手机号的格式校验
+      if (/^1[3-9]\d{9}$/.test(value)) {
+        callback()
+      } else {
+        callback(new Error('手机号格式不正确'))
+      }
+    }
     return {
+      // 表单数据对象
       loginForm: {
         mobile: '',
         code: ''
+      },
+      // 表单验证规则对象
+      loginRules: {
+        mobile: [
+          { required: true, message: ' 请输入手机号 ', trigger: 'bler' },
+          { validator: checkMobile, trigger: 'blur' }
+          // 添加自定义校验
+          // i.有一个字段 validator 指定自定义校验规则的函数
+          // ii.校验规则函数提前声明, 在data()的return之前
+          // iii.函数有约定:
+          //   ① 参数(rule,value,callback) 规则对象 输入的内容 回调函数(验证完毕需要调用)
+          //   ② 当callback()成功 , 当前callback(new Error('错误提示))失败
+        ],
+        code: [
+          { required: true, message: ' 请输入手机号 ', trigger: 'bler' },
+          { len: 6, message: ' 请输入6位数字 ', trigger: 'bler' }
+        ]
       }
+    }
+  },
+  methods: {
+    login () {
+      // 对整个表单进行校验
+      this.$refs.loginForm.validate(valid => {
+        if (valid) {
+          // 提交登录请求
+        }
+      })
     }
   }
 }
