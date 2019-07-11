@@ -68,13 +68,15 @@ export default {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
           // 提交登录请求 axios 是基于 promise 封装的 post() 返回值是一个promise 对象
-          this.$http.post('http://ttapi.research.itca', this.loginFrom)
+          this.$http
+            .post('http://ttapi.research.itcast.cn/mp/v1_0/authorizations', this.loginForm)
             .then(res => {
               // res 是响应对象 包含 后台返回的数据 res.data
               // console.log(res.data) 登录成功去做什么?
               // 1.跳转到首页
               // TODO 2.保存用户的信息 用来判断登录的状态
               this.$router.push('/')
+              console.log(res)
             })
             // 如果不用err 可以改成空 ( )
             .catch(() => {
