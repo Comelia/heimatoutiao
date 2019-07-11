@@ -1,13 +1,66 @@
 <template>
   <div class="home-container">
-    <el-container>
-      <el-aside width="200px">Aside</el-aside>
+    <el-container class="container">
+      <!-- 侧边栏 -->
+      <el-aside :width="isCollapse? '60px':'200px'" class="my-asidebar">
+        <div class="logo" :class="{'m-logo': isCollapse}" ></div>
+        <el-menu
+          :collapse="isCollapse"
+          :collapse-transition='false'
+          style="border-right: none"
+          default-active="1"
+          class="el-menu-vertical-demo"
+          background-color="#002033"
+          text-color="#fff"
+          active-text-color="#ffd04b"
+        >
+          <el-menu-item index="1">
+            <i class="el-icon-s-home"></i>
+            <span slot="title">首页</span>
+          </el-menu-item>
+          <el-menu-item index="2">
+            <i class="el-icon-document"></i>
+            <span slot="title">内容管理</span>
+          </el-menu-item>
+          <el-menu-item index="3">
+            <i class="el-icon-picture"></i>
+            <span slot="title">素材管理</span>
+          </el-menu-item>
+          <el-menu-item index="4">
+            <i class="el-icon-s-promotion"></i>
+            <span slot="title">发布文章</span>
+          </el-menu-item>
+          <el-menu-item index="5">
+            <i class="el-icon-chat-dot-round"></i>
+            <span slot="title">评论管理</span>
+          </el-menu-item>
+          <el-menu-item index="6">
+            <i class="el-icon-present"></i>
+            <span slot="title">粉丝管理</span>
+          </el-menu-item>
+          <el-menu-item index="7">
+            <i class="el-icon-setting"></i>
+            <span slot="title">个人设置</span>
+          </el-menu-item>
+        </el-menu>
+      </el-aside>
       <el-container>
+        <!-- 导航栏 -->
         <el-header class="my-header">
           <!-- icon -->
-          <span class="el-icon-s-fold"></span>
-          <span class="text">传智播客</span>
+          <span class="el-icon-s-fold" @click="close"></span>
+          <span class="text">江苏传智播客科技教育有限公司</span>
           <!-- 下拉菜单 -->
+          <el-dropdown style="float: right">
+            <span class="el-dropdown-link">
+              <img src="../../assets/images/avatar.jpg" style="width: 36px;vertical-align: middle;margin-right: 5px;" alt=""> 下拉菜单
+              <i class="el-icon-arrow-down el-icon--right"></i>
+            </span>
+            <el-dropdown-menu slot="dropdown">
+              <el-dropdown-item icon="el-icon-setting">个人设置</el-dropdown-item>
+              <el-dropdown-item icon="el-icon-unlock">退出登录</el-dropdown-item>
+            </el-dropdown-menu>
+          </el-dropdown>
         </el-header>
         <el-main>Main</el-main>
       </el-container>
@@ -16,7 +69,18 @@
 </template>
 
 <script>
-export default {}
+export default {
+  data () {
+    return {
+      isCollapse: false
+    }
+  },
+  methods: {
+    close () {
+      this.isCollapse = !this.isCollapse
+    }
+  }
+}
 </script>
 
 <style scoped lang="less">
@@ -26,14 +90,34 @@ export default {}
   top: 0;
   width: 100%;
   height: 100%;
-  .my-header {
-    line-height: 60px;
-    .el-icon-s-fold {
-      font-size: 16px;
-      vertical-align: middle;
+  .container {
+    width: 100%;
+    height: 100%;
+    // 侧边栏
+    .my-asidebar {
+      height: 100%;
+      background: #002033;
+      .logo {
+        height: 60px;
+        background: #024 url(../../assets/images/logo_admin.png) no-repeat
+          center / 140px auto;
+      }
+      .m-logo {
+        background: url(../../assets/images/logo_admin_01.png) no-repeat center;
+        background-size: 46px auto;
+      }
     }
-    .text {
-      vertical-align: middle;
+    // 导航栏
+    .my-header {
+      line-height: 60px;
+      .el-icon-s-fold {
+        font-size: 28px;
+        vertical-align: middle;
+        margin-right: 6px;
+      }
+      .text {
+        vertical-align: middle;
+      }
     }
   }
 }
