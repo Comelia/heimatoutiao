@@ -46,7 +46,7 @@ export default {
       // 表单验证规则对象
       loginRules: {
         mobile: [
-          { required: true, message: ' 请输入手机号 ', trigger: 'bler' },
+          { required: true, message: ' 请输入手机号 ', trigger: 'blur' },
           { validator: checkMobile, trigger: 'blur' }
           // 添加自定义校验
           // i.有一个字段 validator 指定自定义校验规则的函数
@@ -56,8 +56,8 @@ export default {
           //   ② 当callback()成功 , 当前callback(new Error('错误提示))失败
         ],
         code: [
-          { required: true, message: ' 请输入手机号 ', trigger: 'bler' },
-          { len: 6, message: ' 请输入6位数字 ', trigger: 'bler' }
+          { required: true, message: ' 请输入验证码 ', trigger: 'blur' },
+          { len: 6, message: ' 请输入6位数字 ', trigger: 'blur' }
         ]
       }
     }
@@ -67,7 +67,20 @@ export default {
       // 对整个表单进行校验
       this.$refs.loginForm.validate(valid => {
         if (valid) {
-          // 提交登录请求
+          // 提交登录请求 axios 是基于 promise 封装的 post() 返回值是一个promise 对象
+          this.$http.post('http://ttapi.research.itca', this.loginFrom)
+            .then(res => {
+              // res 是响应对象 包含 后台返回的数据 res.data
+              // console.log(res.data) 登录成功去做什么?
+              // 1.跳转到首页
+              // TODO 2.保存用户的信息 用来判断登录的状态
+              this.$router.push('/')
+            })
+            // 如果不用err 可以改成空 ( )
+            .catch(() => {
+              // 提示用户错误信息
+              this.$message.error('手机号或验证码错误')
+            })
         }
       })
     }
