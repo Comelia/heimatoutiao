@@ -74,9 +74,10 @@ export default {
               // res 是响应对象 包含 后台返回的数据 res.data
               // console.log(res.data) 登录成功去做什么?
               // 1.跳转到首页
-              // TODO 2.保存用户的信息 用来判断登录的状态
               this.$router.push('/')
-              console.log(res)
+              // console.log(res)
+              // TODO 2.保存用户的信息 用来判断登录的状态
+              window.sessionStorage.setItem('hm-toutiao', JSON.stringify(res.data.data))
             })
             // 如果不用err 可以改成空 ( )
             .catch(() => {
