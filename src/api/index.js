@@ -1,6 +1,6 @@
 // 配置 axios
 import axios from 'axios'
-
+// axios.create([config])  使用自定义配置新建一个 axios 实例
 const instance = axios.create({
   // 配置对象 基准路径
   baseURL: 'http://ttapi.research.itcast.cn/mp/v1_0/'
@@ -10,7 +10,7 @@ const instance = axios.create({
   // }
 })
 
-// 请求拦截
+// 请求拦截  config 是上面配置项
 instance.interceptors.request.use(config => {
   // 给头部加上认证信息
   const user = window.sessionStorage.getItem('hm-toutiao')
