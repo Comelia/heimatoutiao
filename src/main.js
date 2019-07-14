@@ -15,7 +15,7 @@ import router from '@/router'
 //   Authorization: 'Bearer' + JSON.parse(window.sessionStorage.getItem('hm-toutiao')).token
 // }
 
-import axios from '@/api'
+import axios from '@/api/axios'
 Vue.prototype.$http = axios
 
 // 1.默认索引 文件夹下 存在index.js index.vue index.json 默认加载这些文件
