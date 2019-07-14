@@ -54,7 +54,7 @@
           <!-- 下拉菜单 -->
           <el-dropdown style="float: right">
             <span class="el-dropdown-link">
-              <img src="../../assets/images/avatar.jpg" style="width: 36px;vertical-align: middle;margin-right: 5px;" alt=""> 下拉菜单
+              <img :src="pic" style="width: 36px;vertical-align: middle;margin-right: 5px;" alt=""> {{ name }}
               <i class="el-icon-arrow-down el-icon--right"></i>
             </span>
             <el-dropdown-menu slot="dropdown">
@@ -76,13 +76,21 @@
 export default {
   data () {
     return {
-      isCollapse: false
+      isCollapse: false,
+      name: '',
+      pic: ''
     }
   },
   methods: {
     close () {
       this.isCollapse = !this.isCollapse
     }
+  },
+  created () {
+    // 显示个人信息
+    const user = JSON.parse(window.sessionStorage.getItem('hm-toutiao'))
+    this.name = user.name
+    this.pic = user.photo
   }
 }
 </script>

@@ -40,8 +40,8 @@ export default {
     return {
       // 表单数据对象
       loginForm: {
-        mobile: '',
-        code: ''
+        mobile: '18366668888',
+        code: '246810'
       },
       // 表单验证规则对象
       loginRules: {
@@ -65,25 +65,44 @@ export default {
   methods: {
     login () {
       // 对整个表单进行校验
-      this.$refs.loginForm.validate(valid => {
+      // this.$refs.loginForm.validate(valid => {
+      //   if (valid) {
+      //     // 提交登录请求 axios 是基于 promise 封装的 post() 返回值是一个promise 对象
+      //     this.$http
+      //       .post('http://ttapi.research.itcast.cn/mp/v1_0/authorizations', this.loginForm)
+      //       .then(res => {
+      //         // res 是响应对象 包含 后台返回的数据 res.data
+      //         // console.log(res.data) 登录成功去做什么?
+      //         // 1.跳转到首页
+      //         this.$router.push('/')
+      //         // console.log(res)
+      //         // TODO 2.保存用户的信息 用来判断登录的状态
+      //         window.sessionStorage.setItem('hm-toutiao', JSON.stringify(res.data.data))
+      //       })
+      //       // 如果不用err 可以改成空 ( )
+      //       .catch(() => {
+      //         // 提示用户错误信息
+      //         this.$message.error('手机号或验证码错误')
+      //       })
+      //   }
+      // })
+
+      // 使用 await 和 async 代码优雅
+      // 对整个表单进行校验
+      this.$refs.loginForm.validate(async valid => {
         if (valid) {
-          // 提交登录请求 axios 是基于 promise 封装的 post() 返回值是一个promise 对象
-          this.$http
-            .post('http://ttapi.research.itcast.cn/mp/v1_0/authorizations', this.loginForm)
-            .then(res => {
-              // res 是响应对象 包含 后台返回的数据 res.data
-              // console.log(res.data) 登录成功去做什么?
-              // 1.跳转到首页
-              this.$router.push('/')
-              // console.log(res)
-              // TODO 2.保存用户的信息 用来判断登录的状态
-              window.sessionStorage.setItem('hm-toutiao', JSON.stringify(res.data.data))
-            })
-            // 如果不用err 可以改成空 ( )
-            .catch(() => {
-              // 提示用户错误信息
-              this.$message.error('手机号或验证码错误')
-            })
+          // try { 业务逻辑 } catch (err) { 处理错误信息 }
+          try {
+            // 获取 用户信息
+            const res = await this.$http.post('authorizations', this.loginForm)
+            // 设置 token
+            window.sessionStorage.setItem('hm-toutiao', JSON.stringify(res.data.data))
+            // 跳转 首页
+            this.$router.push('/')
+          } catch (err) {
+            // 提示用户错误信息
+            this.$message.error('手机号或验证码错误')
+          }
         }
       })
     }
