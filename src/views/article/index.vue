@@ -34,7 +34,7 @@
           ></el-date-picker>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary">筛选</el-button>
+          <el-button @click="search()" type="primary">筛选</el-button>
         </el-form-item>
       </el-form>
     </el-card>
@@ -118,6 +118,10 @@ export default {
     console.log(this.articles)
   },
   methods: {
+    // 搜索
+    search () {
+      this.getArticles()
+    },
     // 选择时间处理函数
     changeDate (values) {
       this.reqParams.begin_pubdate = values[0]
