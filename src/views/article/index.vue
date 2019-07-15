@@ -41,17 +41,12 @@
     </el-card>
     <!-- 筛选结果 -->
     <el-card class="box-card">
-      <my-test>
-        <!-- 具名插槽和作用域插槽引入了一个新的统一的语法 (即 v-slot 指令) -->
-        <template v-slot:content="scope">内容内容 {{ scope.test }}</template>
-      </my-test>
     </el-card>
   </div>
 </template>
 
 <script>
-import MyBread from '@/components/my-bread.vue'
-import MyTest from '@/components/my-test.vue'
+// import MyBread from '@/components/my-bread.vue'
 
 export default {
   data () {
@@ -71,8 +66,7 @@ export default {
     }
   },
   components: {
-    MyBread,
-    MyTest
+    // MyBread
   }
 }
 </script>

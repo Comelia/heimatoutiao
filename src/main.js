@@ -6,6 +6,7 @@ import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import router from '@/router'
 
+import component from '@/components'
 // 导入axios
 // import axios from 'axios'
 // 基准路径
@@ -16,6 +17,7 @@ import router from '@/router'
 // }
 
 import axios from '@/api/axios'
+Vue.use(component)
 Vue.prototype.$http = axios
 
 // 1.默认索引 文件夹下 存在index.js index.vue index.json 默认加载这些文件
