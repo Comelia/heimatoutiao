@@ -4,10 +4,7 @@
     <el-card class="box-card">
       <div slot="header">
         <!-- 面包屑导航 -->
-        <el-breadcrumb separator-class="el-icon-arrow-right">
-          <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-          <el-breadcrumb-item>内容管理</el-breadcrumb-item>
-        </el-breadcrumb>
+        <my-bread>内容管理</my-bread>
       </div>
       <!-- 筛选表单 -->
         <el-form :model="reqParams" size="small" label-width="80px">
@@ -42,10 +39,13 @@
           </el-form-item>
         </el-form>
     </el-card>
+    <!-- 筛选结果 -->
   </div>
 </template>
 
 <script>
+import MyBread from '@/components/my-bread.vue'
+
 export default {
   data () {
     return {
@@ -53,7 +53,9 @@ export default {
       reqParams: {
         // 如果是 null 该字段不会提交给后台
         status: null,
-        channel_id: null
+        channel_id: null,
+        begin_pubdate: null,
+        end_pubdate: null
       },
       // 频道的选项数组
       channel: [{ name: 'js', id: '1' }],
@@ -61,7 +63,9 @@ export default {
       dateValues: []
     }
   },
-  components: {}
+  components: {
+    MyBread
+  }
 }
 </script>
 
