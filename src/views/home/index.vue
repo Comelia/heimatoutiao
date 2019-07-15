@@ -9,7 +9,7 @@
           :collapse="isCollapse"
           :collapse-transition='false'
           style="border-right: none"
-          default-active="/"
+          :default-active="$route.path"
           class="el-menu-vertical-demo"
           background-color="#002033"
           text-color="#fff"
