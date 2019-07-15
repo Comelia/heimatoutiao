@@ -41,17 +41,9 @@
     </el-card>
     <!-- 筛选结果 -->
     <el-card class="box-card">
-      <!-- 具名插槽 -->
-      <!-- <content>内容1</content>
-      <footer>底部1</footer>-->
-
-      <!-- 作用域插槽 -->
-      <!-- scope 收集了该插槽上所有的自定义属性的数据 -->
-      <!-- scope 是一个对象 包含了插槽上的所有数据  -->
       <my-test>
-        <template slot="content" slot-scope="scope">
-            内容1 {{scope.test}}
-        </template>
+        <!-- 具名插槽和作用域插槽引入了一个新的统一的语法 (即 v-slot 指令) -->
+        <template v-slot:content="scope">内容内容 {{ scope.test }}</template>
       </my-test>
     </el-card>
   </div>
