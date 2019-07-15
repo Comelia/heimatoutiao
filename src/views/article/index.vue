@@ -24,6 +24,8 @@
         </el-form-item>
         <el-form-item label="日期:">
           <el-date-picker
+            value-format="yyyy-MM-dd"
+            @change="changeDate"
             v-model="dateValues"
             type="daterange"
             range-separator="至"
@@ -116,6 +118,11 @@ export default {
     console.log(this.articles)
   },
   methods: {
+    // 选择时间处理函数
+    changeDate (values) {
+      this.reqParams.begin_pubdate = values[0]
+      this.reqParams.end_pubdate = values[1]
+    },
     // 获取频道数据
     async getChannel () {
       // res  => { data: 响应内容 }  =>  { data: { data: { channels: {id,name},... } }}
