@@ -1,6 +1,5 @@
 <template>
  <div class="container">
-   <!-- 默认插槽 -->
    <slot></slot>
  </div>
 </template>
