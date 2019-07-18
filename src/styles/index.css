@@ -30,3 +30,9 @@
 .publish-container .ql-toolbar {
   padding: 0;
 }
+.image-container .el-dialog__body {
+  padding: 0 20px;
+}
+.image-container .el-pagination {
+  line-height: 30px;
+}
