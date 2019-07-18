@@ -17,7 +17,7 @@
         <img :src="item.url" alt />
         <!-- v-show="!reqParams.collect"  当收藏时隐藏 下面图标 -->
         <div class="foot" v-show="!reqParams.collect">
-          <span class="el-icon-star-off" :class="{red:item.is_collected}"></span>
+          <span @click="toggleFav(item)" class="el-icon-star-off" :class="{red:item.is_collected}"></span>
           <span class="el-icon-delete"></span>
         </div>
       </li>
@@ -88,6 +88,16 @@ export default {
     this.getImages()
   },
   methods: {
+    // 点击星星 切换收藏和取消收藏
+    async toggleFav (item) {
+      const { data: { data } } = await this.$http.put('user/images/' + item.id, {
+        collect: !item.is_collected
+      })
+      // 成功
+      this.$message.success('操作成功')
+      // 把当前的图片的状态改成操作后 后台给的状态
+      item.is_collected = data.collect
+    },
     // 素材上传成功
     handleSuccess (res) {
       // 预览2s 提示上传成功
