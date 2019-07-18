@@ -7,6 +7,7 @@ import Welcome from '@/views/welcome'
 import Notfound from '@/views/404'
 import Article from '@/views/article'
 import Image from '@/views/image'
+import Publish from '@/views/publish'
 
 Vue.use(VueRouter)
 
@@ -22,7 +23,8 @@ const router = new VueRouter({
         // 欢迎页
         { name: 'welcome', path: '/', component: Welcome },
         { name: 'article', path: '/article', component: Article },
-        { name: 'image', path: '/image', component: Image }
+        { name: 'image', path: '/image', component: Image },
+        { name: 'publish', path: '/publish', component: Publish }
       ]
     },
     // 404页面 当路径发生改变 根据定义的路由规则顺序去匹配 走到最后发现没有对应的规则, 做404处理

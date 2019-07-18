@@ -24,3 +24,9 @@
   height: 178px;
   display: block;
 }
+.publish-container .ql-editor {
+  height: 300px;
+}
+.publish-container .ql-toolbar {
+  padding: 0;
+}
