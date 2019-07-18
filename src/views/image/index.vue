@@ -18,7 +18,7 @@
         <!-- v-show="!reqParams.collect"  当收藏时隐藏 下面图标 -->
         <div class="foot" v-show="!reqParams.collect">
           <span @click="toggleFav(item)" class="el-icon-star-off" :class="{red:item.is_collected}"></span>
-          <span class="el-icon-delete"></span>
+          <span @click="delImage(item.id)" class="el-icon-delete"></span>
         </div>
       </li>
     </ul>
@@ -88,6 +88,20 @@ export default {
     this.getImages()
   },
   methods: {
+    // 删除图片
+    delImage (id) {
+      this.$confirm('此操作将永久删除该图片, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      })
+        .then(async () => {
+          await this.$http.delete('user/images/' + id)
+          this.$message.success('操作成功')
+          this.getImages()
+        })
+        .catch(() => {})
+    },
     // 点击星星 切换收藏和取消收藏
     async toggleFav (item) {
       const { data: { data } } = await this.$http.put('user/images/' + item.id, {
