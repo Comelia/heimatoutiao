@@ -15,8 +15,12 @@ import component from '@/components'
 // axios.defaults.headers = {
 //   Authorization: 'Bearer' + JSON.parse(window.sessionStorage.getItem('hm-toutiao')).token
 // }
-
+// 导入 axios
 import axios from '@/api/axios'
+
+// 导入全局样式
+import '@/styles/index.less'
+
 Vue.use(component)
 Vue.prototype.$http = axios
 

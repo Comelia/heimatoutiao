@@ -9,7 +9,7 @@
         <el-radio-button label="false">全部</el-radio-button>
         <el-radio-button label="true">收藏</el-radio-button>
       </el-radio-group>
-      <el-button style="float:right" size="small" type="success">添加素材</el-button>
+      <el-button @click="dialogVisible = true" style="float:right" size="small" type="success">添加素材</el-button>
     </div>
     <!-- 图片列表 -->
     <ul class="pic-list">
@@ -36,6 +36,23 @@
       layout="prev, pager, next"
       :total="total"
     ></el-pagination>
+    <el-dialog title="添加素材" :visible.sync="dialogVisible" width="30%">
+      <!-- <span>上传组件</span> -->
+      <el-upload
+        class="avatar-uploader"
+        action="http://ttapi.research.itcast.cn/mp/v1_0/user/images"
+        :headers="headers"
+        :show-file-list="false"
+        :on-success="handleSuccess"
+        name="image"
+      >
+        <img v-if="imageUrl" :src="imageUrl" class="avatar" />
+        <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+      </el-upload>
+      <span slot="footer" class="dialog-footer">
+        <el-button type="primary" size="small" @click="dialogVisible = false">关 闭</el-button>
+      </span>
+    </el-dialog>
   </el-card>
 </template>
 
@@ -54,7 +71,16 @@ export default {
       images: [],
       // 总条数
       total: 0,
-      loading: false
+      // 加载
+      loading: false,
+      // 添加素材相关数据
+      // dialogVisible = true 控制对话框显示隐藏
+      dialogVisible: false,
+      imageUrl: null,
+      // 上传素材 携带token
+      headers: {
+        Authorization: 'Bearer ' + JSON.parse(window.sessionStorage.getItem('hm-toutiao')).token
+      }
     }
   },
   created () {
@@ -62,6 +88,20 @@ export default {
     this.getImages()
   },
   methods: {
+    // 素材上传成功
+    handleSuccess (res) {
+      // 预览2s 提示上传成功
+      console.log(res)
+      this.imageUrl = res.data.url
+      this.$message.success('上传成功')
+      window.setTimeout(() => {
+        // 自动关闭对话框 更新列表数据
+        this.dialogVisible = false
+        this.getImages()
+        // 清空上次图片
+        this.imageUrl = null
+      }, 2000)
+    },
     // 分页
     pager (newPage) {
       this.reqParams.page = newPage
@@ -74,9 +114,9 @@ export default {
       } = await this.$http.get('/user/images', { params: this.reqParams })
       // 获取数据成功
       this.images = data.results
+      this.loading = false
       // 设置总条数
       this.total = data.total_count
-      this.loading = false
     },
     // 切换全部和收藏
     search () {
@@ -120,4 +160,5 @@ export default {
     }
   }
 }
+
 </style>
