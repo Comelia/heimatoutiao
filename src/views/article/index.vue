@@ -41,7 +41,7 @@
     <!-- 筛选结果 -->
     <el-card class="box-card">
       <div slot="header">
-        根据筛选条件同查询到 <b>0</b> 条结果:
+        根据筛选条件同查询到 <b>{{ total }}</b> 条结果:
       </div>
       <el-table :data="articles">
         <el-table-column label="封面">
@@ -75,10 +75,15 @@
         </el-table-column>
       </el-table>
       <div class="box">
+        <!-- current-change 改变页码触发的事件 -->
+        <!-- :current-page  当前页面 -->
         <el-pagination
           background
           layout="prev, pager, next"
-          :total="1000">
+          @current-change="pager"
+          :page-size="reqParams.per_page"
+          :current-page="reqParams.page"
+          :total="total">
         </el-pagination>
       </div>
     </el-card>
@@ -97,14 +102,18 @@ export default {
         status: null,
         channel_id: null,
         begin_pubdate: null,
-        end_pubdate: null
+        end_pubdate: null,
+        page: 1,
+        per_page: 20
       },
       // 频道的选项数组
       channel: [{ name: 'js', id: '1' }],
       // 日期数据
       dateValues: [],
       // 文章列表数据
-      articles: []
+      articles: [],
+      // 总条数
+      total: 0
     }
   },
   components: {
@@ -115,9 +124,16 @@ export default {
     this.getChannel()
     // 获取文章列表数据
     this.getArticles()
-    console.log(this.articles)
+    // console.log(this.articles)
   },
   methods: {
+    // 分页
+    pager (newPage) {
+      this.reqParams.page = 1
+      // 提交当前页码给后台 才能获取对应的数据
+      this.reqParams.page = newPage
+      this.getArticles()
+    },
     // 搜索
     search () {
       this.getArticles()
@@ -140,6 +156,9 @@ export default {
       // get 传参 get ('url?key=val&...')   get('url', {params: {参数对象}})
       const { data: { data } } = await this.$http.get('articles', { params: this.reqParams })
       this.articles = data.results
+      // 获取总条数
+      this.total = data.total_count
+      // console.log(data)
     }
   }
 }
