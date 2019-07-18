@@ -1,7 +1,7 @@
 <template>
   <div class="image-container">
     <!-- 图片按钮 -->
-    <div class="img-btn" @click="dialogVisible=true">
+    <div class="img-btn" @click="openDialog">
       <img src="../assets/images/default.png" alt />
     </div>
     <!-- 对话框 -->
@@ -19,8 +19,8 @@
             </el-radio-group>
           </div>
           <!-- 图片列表 -->
-          <div class="pic_list" v-for="item in 8" :key="item">
-            <img src="../assets/images/avatar.jpg" alt />
+          <div class="pic_list" v-for="item in images" :key="item.id">
+            <img :src="item.url" alt />
           </div>
           <!-- 分页 -->
           <el-pagination background layout="prev, pager, next" :total="1000"></el-pagination>
@@ -31,8 +31,9 @@
             action="http://ttapi.research.itcast.cn/mp/v1_0/user/images"
             :show-file-list="false"
             :on-success="handleAvatarSuccess"
-            name="image">
-            <img v-if="uploadimageUrl" :src="uploadimageUrl" class="avatar">
+            name="image"
+          >
+            <img v-if="uploadimageUrl" :src="uploadimageUrl" class="avatar" />
             <i v-else class="el-icon-plus avatar-uploader-icon"></i>
           </el-upload>
         </el-tab-pane>
@@ -57,15 +58,26 @@ export default {
       activeName: 'fodder',
       // 获取素材列表时传参
       reqParams: {
-        collect: false
+        collect: false,
+        page: 1,
+        per_page: 8
       },
       // 上传图片后预览的路径
-      uploadimageUrl: value
+      uploadimageUrl: value,
+      // 图片列表
+      images: []
     }
   },
   methods: {
-    handleAvatarSuccess () {
-
+    handleAvatarSuccess () {},
+    openDialog () {
+      this.dialogVisible = true
+      // 渲染素材列表
+      this.getImages()
+    },
+    async getImages () {
+      const { data: { data } } = await this.$http.get('user/images', { params: this.reqParams })
+      this.images = data.results
     }
   }
 }
@@ -91,6 +103,8 @@ export default {
   border: 1px dashed #ddd;
   img {
     width: 100%;
+    height: 100%;
+    display: block;
   }
 }
 </style>
