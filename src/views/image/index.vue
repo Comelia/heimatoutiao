@@ -6,8 +6,8 @@
     <!-- 按钮式单选框 -->
     <div>
       <el-radio-group size="small" @change="search()" v-model="reqParams.collect">
-        <el-radio-button label="false">全部</el-radio-button>
-        <el-radio-button label="true">收藏</el-radio-button>
+        <el-radio-button :label="false">全部</el-radio-button>
+        <el-radio-button :label="true">收藏</el-radio-button>
       </el-radio-group>
       <el-button @click="dialogVisible = true" style="float:right" size="small" type="success">添加素材</el-button>
     </div>
@@ -16,7 +16,7 @@
       <li v-for="item in images" :key="item.id">
         <img :src="item.url" alt />
         <!-- v-show="!reqParams.collect"  当收藏时隐藏 下面图标 -->
-        <div class="foot" v-show="!reqParams.collect">
+        <div class="foot" v-if="!reqParams.collect">
           <span @click="toggleFav(item)" class="el-icon-star-off" :class="{red:item.is_collected}"></span>
           <span @click="delImage(item.id)" class="el-icon-delete"></span>
         </div>
@@ -157,8 +157,8 @@ export default {
   overflow: hidden;
   li {
     position: relative;
-    width: 150px;
-    height: 150px;
+    width: 17%;
+    height: 170px;
     float: left;
     margin: 0 30px 30px 0;
     img {

@@ -67,9 +67,9 @@
         </el-table-column>
         <el-table-column label="发布时间" prop="pubdate"></el-table-column>
         <el-table-column label="操作" width="120px">
-          <template slot-scope="">
-            <el-button icon="el-icon-edit" circle plain type="primary"></el-button>
-            <el-button icon="el-icon-delete" circle plain type="danger"></el-button>
+          <template slot-scope="scope">
+            <el-button icon="el-icon-edit" @click="edit(scope.row.id)" circle plain type="primary"></el-button>
+            <el-button icon="el-icon-delete" @click="del(scope.row.id)" circle plain type="danger"></el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -124,6 +124,24 @@ export default {
     // console.log(this.articles)
   },
   methods: {
+    // 编辑
+    edit (id) {
+      this.$router.push(`/publish?id=${id}`)
+    },
+    // 删除
+    del (id) {
+      this.$confirm('亲，此操作将永久删除该文章, 是否继续?', '温馨提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      })
+        .then(async () => {
+          await this.$http.delete(`articles/${id}`)
+          // 删除成功
+          this.$message.success('删除成功')
+          this.getArticles()
+        })
+    },
     // 分页
     pager (newPage) {
       this.reqParams.page = 1
