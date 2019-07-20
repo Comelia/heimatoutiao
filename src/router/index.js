@@ -9,6 +9,8 @@ import Article from '@/views/article'
 import Image from '@/views/image'
 import Publish from '@/views/publish'
 import Comment from '@/views/comment'
+import Fans from '@/views/fans'
+import Setting from '@/views/setting'
 
 Vue.use(VueRouter)
 
@@ -26,7 +28,9 @@ const router = new VueRouter({
         { name: 'article', path: '/article', component: Article },
         { name: 'image', path: '/image', component: Image },
         { name: 'publish', path: '/publish', component: Publish },
-        { name: 'comment', path: '/comment', component: Comment }
+        { name: 'comment', path: '/comment', component: Comment },
+        { name: 'fans', path: '/fans', component: Fans },
+        { name: 'setting', path: '/setting', component: Setting }
       ]
     },
     // 404页面 当路径发生改变 根据定义的路由规则顺序去匹配 走到最后发现没有对应的规则, 做404处理
