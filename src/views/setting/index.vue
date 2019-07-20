@@ -27,8 +27,7 @@
           <el-upload
             class="avatar-uploader"
             action=""
-            :show-file-list="false"
-            :on-success="handleSuccess">
+            :show-file-list="false">
             <img v-if="userForm.phone" :src="userForm.phone" class="avatar">
             <i v-else class="el-icon-plus avatar-uploader-icon"></i>
           </el-upload>
@@ -40,13 +39,14 @@
 </template>
 
 <script>
+import eventBus from '@/eventBus'
 export default {
   data () {
     return {
       userForm: {
         id: 1,
         mobile: '13911111111',
-        name: 'text',
+        name: '',
         intro: null,
         email: null,
         phone: null
@@ -64,7 +64,20 @@ export default {
       this.userForm = data
     },
     // 更改用户信息
-    updateUserInfo () {}
+    async updateUserInfo () {
+      const { data: { data } } = await this.$http.patch(`user/profile`, {
+        name: this.userForm.name,
+        intro: this.userForm.intro,
+        email: this.userForm.email
+      })
+      this.$message.success('修改用户信息成功')
+      // 1.传入当前修改的用户名称给home组件 修改home组件的数据用户名
+      eventBus.$emit('updateHeaderName', data.name)
+      // 2.更新本地存储的用户名称
+      const userInfo = JSON.parse(window.sessionStorage.getItem('hm-toutiao'))
+      userInfo.name = data.name
+      window.sessionStorage.setItem('hm-toutiao', JSON.stringify(userInfo))
+    }
   }
 }
 </script>

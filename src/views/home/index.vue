@@ -73,6 +73,7 @@
 </template>
 
 <script>
+import eventBus from '@/eventBus'
 export default {
   data () {
     return {
@@ -98,6 +99,10 @@ export default {
     const user = JSON.parse(window.sessionStorage.getItem('hm-toutiao'))
     this.name = user.name
     this.pic = user.photo
+
+    eventBus.$on('updateHeaderName', (data) => {
+      this.name = data
+    })
   }
 }
 </script>
