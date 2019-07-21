@@ -103,6 +103,11 @@ export default {
     eventBus.$on('updateHeaderName', (data) => {
       this.name = data
     })
+  },
+  mounted () {
+    eventBus.$on('updateHeaderPhoto', (data) => {
+      this.pic = data
+    })
   }
 }
 </script>
