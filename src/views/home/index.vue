@@ -80,7 +80,7 @@ export default {
       isCollapse: false,
       name: '',
       pic: '',
-      test: '' // 测试
+      test: '' // 测试001
     }
   },
   methods: {
