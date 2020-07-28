@@ -1,16 +1,17 @@
 // 配置路由
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Login from '@/views/login'
-import Home from '@/views/home'
-import Welcome from '@/views/welcome'
-import Notfound from '@/views/404'
-import Article from '@/views/article'
-import Image from '@/views/image'
-import Publish from '@/views/publish'
-import Comment from '@/views/comment'
-import Fans from '@/views/fans'
-import Setting from '@/views/setting'
+// 路由懒加载 解决首屏加载过慢 --当你访问那个路由，只加载这个路由需要的资源
+const Login = () => import('@/views/login')
+const Home = () => import('@/views/home')
+const Welcome = () => import('@/views/welcome')
+const Notfound = () => import('@/views/404')
+const Article = () => import('@/views/article')
+const Image = () => import('@/views/image')
+const Publish = () => import('@/views/publish')
+const Comment = () => import('@/views/comment')
+const Fans = () => import('@/views/fans')
+const Setting = () => import('@/views/setting')
 
 Vue.use(VueRouter)
 

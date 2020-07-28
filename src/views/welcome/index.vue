@@ -6,7 +6,6 @@
 
 <script>
 export default {
-  // 模拟测试 如果token两小时后失效 是什么页面效果
 
 }
 </script>

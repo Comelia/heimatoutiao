@@ -79,7 +79,8 @@ export default {
     return {
       isCollapse: false,
       name: '',
-      pic: ''
+      pic: '',
+      test: '' // 测试
     }
   },
   methods: {
